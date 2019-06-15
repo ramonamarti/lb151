@@ -1,0 +1,65 @@
+<!-- this page is called after the login of a student, after the checking of edited module data or after looking at the student data -->
+<!-- it shows a table with all modules of the student and its attributes -->
+<!-- it could go to the exams of the single module, make new module, edit module or delete module -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Module</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Modul</h1>
+<header th:include="/fragments :: header"></header>
+<main>
+    <form method="get" th:action="@{/grademanager/module/add}">
+        <input type="submit" value="Neues Modul">
+    </form>
+<!--  Archiv/Wiederherstellen Button  -->
+    <table th:object="${module}">
+        <tr>
+            <th>Modulnummer</th>
+            <th>Modulname</th>
+            <th>Richtung</th>
+            <th>Lehrer</th>
+            <th>Status</th>
+            <th>Schnitt</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="m : ${moduleList}" th:if='${m.getDeactivated().toString().equals("Nein")}'>
+            <td>
+                <form method="get" th:action="@{/grademanager/exam}" th:object="${module}">
+                    <input type="hidden" th:value="${m.getId()}" th:name="id">
+                    <input type="submit" th:value="${m.getNumber()}">
+                </form>
+                <!--<a th:href="@{/grademanager/exam}" th:text="${m.getNumber()}"></a>-->
+            </td>
+            <td>
+                <form method="get" th:action="@{/grademanager/exam}" th:object="${module}">
+                    <input type="hidden" th:value="${m.getId()}" th:name="id">
+                    <input type="submit" th:value="${m.getName()}">
+                </form>
+                <!--<a th:href="@{/grademanager/exam}" th:text="${m.getName()}"></a>-->
+            </td>
+            <td th:text="${m.getDirection()}"></td>
+            <td th:text="${m.getTeacher()}"></td>
+            <td th:text="${m.getState()}"></td>
+            <td th:text="${m.getAverage()}"></td>
+            <td>
+                <form method="get" th:action="@{/grademanager/module/edit}" th:object="${module}">
+                    <input type="hidden" th:name="id" th:value="${m.getId()}">
+                    <input type="submit" value="Bearbeiten">
+                </form>
+            </td>
+            <td>
+                <form method="get" th:action="@{/grademanager/module/del}" th:object="${module}">
+                    <input type="hidden" th:name="id" th:value="${m.getId()}">
+                    <input type="submit" value="Löschen">
+                </form>
+            </td>
+        </tr>
+    </table>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

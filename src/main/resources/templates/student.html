@@ -1,0 +1,61 @@
+<!-- this page is called after its call in the navigation bar or after the checking of edited student data -->
+<!-- it shows all data of the student -->
+<!-- it could edit student, delete student or go back to the main module view -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Kontaktdaten</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Kontaktdaten</h1>
+<div th:replace="/fragments :: header"></div>
+<main>
+    <form method="get" th:action="@{/grademanager/module}">
+        <input type="submit" value="Zurück"/>
+    </form>
+    <table th:object="${student}">
+        <tr>
+            <td>Login:</td>
+            <td th:text="*{login}"></td>
+        </tr>
+        <tr>
+            <td>Vorname:</td>
+            <td th:text="*{firstname}"></td>
+        </tr>
+        <tr>
+            <td>Nachname:</td>
+            <td th:text="*{familyname}"></td>
+        </tr>
+        <tr>
+            <td>Adresse:</td>
+            <td th:text="*{street}"></td>
+        </tr>
+        <tr>
+            <td>PLZ, Ort:</td>
+            <td>
+                <div th:text="*{city.zip}"></div>
+                <div th:text="*{city.name}"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Richtung:</td>
+            <td th:text="*{direction}"></td>
+        </tr>
+        <tr>
+            <td>
+                <form method="get" th:action="@{/grademanager/student/edit}">
+                    <input type="submit" value="Daten bearbeiten"/>
+                </form>
+            </td>
+            <td>
+                <form method="get" th:action="@{/grademanager/student/del}">
+                    <input type="submit" value="Nutzer löschen"/>
+                </form>
+            </td>
+        </tr>
+    </table>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

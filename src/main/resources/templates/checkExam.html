@@ -1,0 +1,43 @@
+<!-- this page is called after a new exam is added or an existing exam is edited -->
+<!-- it shows the save information of the new or edited exam -->
+<!-- it will send you to the main view of the module exams -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bearbeitete Prüfung</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Bearbeitete Prüfung</h1>
+<div th:replace="/fragments :: header"></div>
+<main>
+    <table th:object="${exam}">
+        <tr>
+            <td>Prüfungstyp:</td>
+            <td th:text="*{type}"></td>
+        </tr>
+        <tr>
+            <td>Status:</td>
+            <td th:text="*{state}"></td>
+        </tr>
+        <tr>
+            <td>Note:</td>
+            <td th:text="*{grade.value}"></td>
+        </tr>
+        <tr>
+            <td>Gewicht:</td>
+            <td th:text="*{grade.weight}"></td>
+        </tr>
+        <tr>
+            <td>Modul:</td>
+            <td th:text="${nameModule}"></td>
+        </tr>
+    </table>
+    <form method="get" th:action="@{/grademanager/exam}">
+        <input type="hidden" th:value="${idModule}" th:name="id">
+        <input type="submit" value="Noten"/>
+    </form>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

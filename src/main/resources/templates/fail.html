@@ -1,0 +1,14 @@
+<!-- this page is called when a wrong login and password is sent -->
+<!-- it will send you back to the login page with the button -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Notenbearbeitung</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Daten falsch eingegeben</h1>
+<a th:href="@{/grademanager}">Zurück</a>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

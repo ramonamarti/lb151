@@ -1,0 +1,42 @@
+<!-- this page is called after a new module is added or an existing module is edited -->
+<!-- it shows the save information of the new or edited module -->
+<!-- it will send you to the modules of the logged in student -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bearbeitetes Modul</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Bearbeitetes Modul</h1>
+<main>
+    <div th:replace="/fragments :: header"></div>
+    <table th:object="${module}">
+        <tr>
+        <td>Modulnummer:</td>
+        <td th:text="*{number}"></td>
+        </tr>
+        <tr>
+            <td>Modulname:</td>
+            <td th:text="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Richtung:</td>
+            <td th:text="*{direction}"></td>
+        </tr>
+        <tr>
+            <td>Status:</td>
+            <td th:text="*{state}"></td>
+        </tr>
+        <tr>
+            <td>Lehrer:</td>
+            <td th:text="*{teacher}"></td>
+        </tr>
+    </table>
+    <form method="get" th:action="@{/grademanager/module}">
+        <input type="submit" value="Module"/>
+    </form>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

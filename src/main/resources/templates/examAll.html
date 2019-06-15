@@ -1,0 +1,40 @@
+<!-- this page is called its called in the navigation -->
+<!-- it shows a table with all exams of all modules and its attributes -->
+<!-- it just haves the included navigation bar to go on -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Prüfungen aller Module</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Prüfungen aller Module</h1>
+<div th:replace="/fragments :: header"></div>
+<main>
+    <table>
+        <tr>
+            <th>Prüfungstyp</th>
+            <th>Status</th>
+            <th>Note</th>
+            <th>Gewicht</th>
+            <th>Modul</th>
+        </tr>
+        <tbody th:each="m : ${student.modules}" th:if='${m.getDeactivated().toString().equals("Nein")}'>
+        <tr th:each="e : *{m.getExams()}" th:if='${e.getDeactivated().toString().equals("Nein")}'>
+            <td th:text="*{e.getType()}"></td>
+            <td th:text="*{e.getState()}"></td>
+            <td style="color: green;font-weight: bold;" th:if='${e.grade.getColor().toString().equals("Gruen")}'
+                th:text="${e.grade.getValue()}"></td>
+            <td style="color: black;font-weight: bold;" th:if='${e.grade.getColor().toString().equals("Schwarz")}'
+                th:text="${e.grade.getValue()}"></td>
+            <td style="color: red;font-weight: bold;" th:if='${e.grade.getColor().toString().equals("Rot")}'
+                th:text="${e.grade.getValue()}"></td>
+            <td th:text="*{e.grade.getWeight()}"></td>
+            <td th:text="*{m.getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

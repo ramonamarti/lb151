@@ -1,0 +1,36 @@
+<!-- this page is called after the main module page to edit the module or add a new module -->
+<!-- it shows a form with the existing data to edit or an empty form -->
+<!-- it will send you to the module to check the data -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Modulbearbeitung</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Modul bearbeiten</h1>
+<header th:include="/fragments :: header"></header>
+<main>
+    <form method="post" th:action="@{/grademanager/module/check}" th:object="${module}">
+        <input type="hidden" th:field="*{id}"/>
+        <label for="value">Modulnummer</label><input type="number" id="value" name="value" th:field="*{number}" step="1"
+                                              min="100" max="999"/><br/>
+        <label for="name">Modulname</label><input type="text" id="name" name="name" th:field="*{name}"/><br/>
+        <label for="direction">Richtung</label>
+        <select id="direction" name="direction" th:field="*{direction}">
+            <option th:each="d : ${directionList}" th:value="${d}" th:text="${d}"></option>
+        </select><br/>
+        <label for="state">Status</label>
+        <select id="state" name="state" th:field="*{state}">
+                <option th:each="s : ${stateList}" th:value="${s}" th:text="${s}"></option>
+        </select><br/>
+        <label for="teacher">Lehrer</label><input type="text" id="teacher" name="teacher" th:field="*{teacher}"/><br/>
+        <select id="deactivated" th:field="*{deactivated}" class="hidden">
+            <option th:each="b : ${boolList}" th:value="${b}" th:text="${b}"></option>
+        </select><br/>
+        <input type="submit" value="Speichern"/>
+    </form>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>

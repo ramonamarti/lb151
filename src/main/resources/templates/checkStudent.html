@@ -1,0 +1,49 @@
+<!-- this page is called after the student data is edited or a new student is added -->
+<!-- it shows the save information of the edited ord added student -->
+<!-- it will send you to the student date page -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bearbeitete Kontaktdaten</title>
+    <div th:replace="/fragments :: head"></div>
+</head>
+<body>
+<h1 class="title">Bearbeitete Kontaktdaten</h1>
+<main>
+    <div th:replace="/fragments :: header"></div>
+    <table th:object="${student}">
+        <tr>
+            <td>Login:</td>
+            <td th:text="*{login}"></td>
+        </tr>
+        <tr>
+            <td>Vorname:</td>
+            <td th:text="*{firstname}"></td>
+        </tr>
+        <tr>
+            <td>Nachname:</td>
+            <td th:text="*{familyname}"></td>
+        </tr>
+        <tr>
+            <td>Adresse:</td>
+            <td th:text="*{street}"></td>
+        </tr>
+        <tr>
+            <td>PLZ, Ort:</td>
+            <td>
+                <div th:text="*{city.zip}"></div>
+                <div th:text="*{city.name}"></div>
+            </td>
+        </tr>
+        <tr>
+            <td>Richtung:</td>
+            <td th:text="*{direction}"></td>
+        </tr>
+    </table>
+    <form th:if="${true}" method="get" th:action="@{/grademanager/student}" th:object="${student}">
+        <input type="submit" value="Weiter"/>
+    </form>
+</main>
+<div th:replace="/fragments :: footer"></div>
+</body>
+</html>
