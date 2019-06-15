@@ -3,12 +3,14 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Notenbearbeitung</title>
+    <title>Falsches Login</title>
     <div th:replace="/fragments :: head"></div>
 </head>
 <body>
 <h1 class="title">Daten falsch eingegeben</h1>
-<a th:href="@{/grademanager}">Zurück</a>
+<main>
+    <a th:href="@{/grademanager}" class="back">Zurück</a>
+</main>
 <div th:replace="/fragments :: footer"></div>
 </body>
 </html>

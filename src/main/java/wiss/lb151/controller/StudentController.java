@@ -36,7 +36,8 @@ public class StudentController {
 
     /**
      * shows student data for logged in student
-     * @param model: model for thymeleaf
+     *
+     * @param model:   model for thymeleaf
      * @param session: to get student with login name
      * @return html document student with current student data
      */
@@ -50,8 +51,9 @@ public class StudentController {
 
     /**
      * shows form to add new student
+     *
      * @param student: student to save and add
-     * @param model: model for thymeleaf
+     * @param model:   model for thymeleaf
      * @param session: to get student with login name
      * @return html document check student to show created data
      */
@@ -70,7 +72,8 @@ public class StudentController {
 
     /**
      * shows form to edit logged in student and fills in current data
-     * @param model: model for thymeleaf
+     *
+     * @param model:   model for thymeleaf
      * @param session: to get student with login name
      * @return html document edit student with filled in data
      */
@@ -84,8 +87,9 @@ public class StudentController {
 
     /**
      * saves student in table student and shows edited data
+     *
      * @param student: student to save
-     * @param model: model for thymeleaf
+     * @param model:   model for thymeleaf
      * @param session: to get student with login name
      * @return html document check student of edited or created student
      */
@@ -95,7 +99,7 @@ public class StudentController {
         student.setModules(studentService.getStudent((String) session.getAttribute("user")).getModules());
         student.setGrades(studentService.getStudent((String) session.getAttribute("user")).getGrades());
         studentService.addStudent(student);
-        session.setAttribute("user",student.getLogin());
+        session.setAttribute("user", student.getLogin());
         studentInfo(model);
         return "checkStudent";
     }
@@ -127,6 +131,7 @@ public class StudentController {
 
     /**
      * adds lists to model
+     *
      * @param model: model for thymeleaf
      */
     static void studentInfo(Model model) {

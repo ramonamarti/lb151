@@ -12,7 +12,7 @@
 <h1 class="title">Anmeldung</h1>
 
 <!--  help tools admin  -->
-<div class="">
+<div class="hidden">
     <form method="get" th:action="@{/grademanager/admin}">
         <input type="submit" value="AdminData"/>
     </form>
@@ -45,8 +45,9 @@
         <label for="familyname">Nachname</label><input type="text" id="familyname" name="familyname"
                                                        th:field="*{familyname}" required/><br/>
         <label for="street">Strasse</label><input type="text" id="street" name="street" th:field="*{street}" required/><br/>
-        <label for="city">PLZ, Ort</label><input type="text" id="zip" name="zip" th:field="*{city.zip}"/><input type="text" id="city" name="city"
-                                                                              th:field="*{city.name}" required/><br/>
+        <label for="city">PLZ, Ort</label><input type="number" min="1000" max="9999" id="zip" name="zip"
+                                                 th:field="*{city.zip}"/><input type="text" id="city" name="city"
+                                                                                th:field="*{city.name}" required/><br/>
         <label for="direction">Richtung</label>
         <select id="direction" th:field="*{direction}">
             <option th:each="d : ${directionList}" th:value="${d}" th:text="${d}"></option>

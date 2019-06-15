@@ -5,8 +5,8 @@
 
 /* definitions to make a sticky footer */
 html {
-    padding: 0px;
-    margin: 0px auto;
+    padding: 0;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     min-height: 100%;
@@ -19,8 +19,8 @@ body {
     background: #d1fffe url("../img/header2.png") repeat-x top left;
     background-size: 100% 100px;
     color: #30486e;
-    padding: 110px 0px 0px;
-    margin: 0px;
+    padding: 110px 0 0;
+    margin: 0;
     max-width: 1500px;
 
     /* definitions to make a sticky footer */
@@ -54,7 +54,7 @@ main {
     top: 20px;
     left: 10px;
     padding: 5px;
-    margin: 0px;
+    margin: 0;
     background: rgba(250, 250, 250, 0.6);
 }
 
@@ -82,12 +82,12 @@ select {
 
 /* defines the special width for zip input */
 #zip {
-    width: 40px;
+    width: 55px;
 }
 
 /* defines the special width for city input */
 #city {
-    width: 140px;
+    width: 125px;
 }
 
 /* defines the box for not the same password (for js) */
@@ -108,7 +108,7 @@ select {
 /* defines div containers */
 div {
     display: inline;
-    margin: 5px 0px;
+    margin: 5px 0;
 }
 
 /* set the title bar of each table */
@@ -129,6 +129,10 @@ a {
     text-decoration: none;
 }
 
+.back {
+    color: #6d7993;
+}
+
 /* defines the navigation list box */
 dl {
     display: flex;
@@ -137,14 +141,14 @@ dl {
     align-content: space-evenly;
     justify-content: space-evenly;
     background: #3e857f;
-    padding: 0px;
+    padding: 0;
     color: white;
 }
 
 /* defines the navigation list items */
 dd {
     padding: 10px;
-    margin: 0px;
+    margin: 0;
 }
 
 /* defines the navigation item marked */
