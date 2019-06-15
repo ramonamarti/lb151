@@ -19,15 +19,27 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * controller to manage the pages of the category student
+ */
 @Controller
 @RequestMapping("/grademanager/student")
 public class StudentController {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    @Autowired
-    private CityService cityService;
+    private final CityService cityService;
 
+    public StudentController(StudentService studentService, CityService cityService) {
+        this.studentService = studentService;
+        this.cityService = cityService;
+    }
+
+    /**
+     * shows student data for logged in student
+     * @param model: model for thymeleaf
+     * @param session: to get student with login name
+     * @return html document student with current student data
+     */
     @GetMapping
     public String showStudent(Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -36,6 +48,13 @@ public class StudentController {
         return "student";
     }
 
+    /**
+     * shows form to add new student
+     * @param student: student to save and add
+     * @param model: model for thymeleaf
+     * @param session: to get student with login name
+     * @return html document check student to show created data
+     */
     @PostMapping("/add")
     public String addStudent(@Valid @ModelAttribute Student student, Model model, HttpSession session) {
         City city = cityService.getCity(student.getCity().getName());
@@ -49,6 +68,12 @@ public class StudentController {
         return "checkStudent"; // all from templates
     }
 
+    /**
+     * shows form to edit logged in student and fills in current data
+     * @param model: model for thymeleaf
+     * @param session: to get student with login name
+     * @return html document edit student with filled in data
+     */
     @GetMapping("/edit")
     public String showE(Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -57,23 +82,35 @@ public class StudentController {
         return "editStudent";
     }
 
+    /**
+     * saves student in table student and shows edited data
+     * @param student: student to save
+     * @param model: model for thymeleaf
+     * @param session: to get student with login name
+     * @return html document check student of edited or created student
+     */
     @PostMapping("/check")
     public String checkE(@Valid @ModelAttribute Student student, Model model, HttpSession session) {
         model.addAttribute("student", student);
         student.setModules(studentService.getStudent((String) session.getAttribute("user")).getModules());
         student.setGrades(studentService.getStudent((String) session.getAttribute("user")).getGrades());
-//        student.setPassword(studentService.getStudent((String) session.getAttribute("user")).getPassword());
         studentService.addStudent(student);
         session.setAttribute("user",student.getLogin());
         studentInfo(model);
         return "checkStudent";
     }
 
+    /**
+     * shows home after student and students other data is deactivated
+     * @param model: model for thymeleaf
+     * @param session: to get student with login name
+     * @return html document home
+     */
     @GetMapping("/del")
     public String showExamD(Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
         student.setDeactivated(Bool.Ja);
-        // löschen wenn kein anderer user angehaengt
+        // delete only when no other student uses
         //student.getCity().setDeactivated(Bool.Ja);
         List<Module> modules = student.getModules();
         for (Module m : modules) {
@@ -88,7 +125,11 @@ public class StudentController {
         return "home";
     }
 
-    public static void studentInfo(Model model) {
+    /**
+     * adds lists to model
+     * @param model: model for thymeleaf
+     */
+    static void studentInfo(Model model) {
         Direction[] directions = Direction.values();
         model.addAttribute(directions);
         Bool[] bools = Bool.values();

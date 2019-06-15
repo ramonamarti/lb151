@@ -13,8 +13,11 @@ import java.util.Optional;
  */
 @Service
 public class GradeService {
-    @Autowired
-    private GradeRespository gradeRespository;
+    private final GradeRespository gradeRespository;
+
+    public GradeService(GradeRespository gradeRespository) {
+        this.gradeRespository = gradeRespository;
+    }
 
     /**
      * to add and save a grade in the table grade
@@ -40,6 +43,10 @@ public class GradeService {
         return Grade;
     }
 
+    /**
+     * to delete a grade from the table grade
+     * @param id: id of a grade
+     */
     public void removeGrade(Long id){
         if(id != null){
             Optional<Grade> optionalGrade = gradeRespository.findById(id);

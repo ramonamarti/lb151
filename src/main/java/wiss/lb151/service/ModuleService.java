@@ -13,8 +13,11 @@ import java.util.Optional;
  */
 @Service
 public class ModuleService {
-    @Autowired
-    private ModuleRespository moduleRespository;
+    private final ModuleRespository moduleRespository;
+
+    public ModuleService(ModuleRespository moduleRespository) {
+        this.moduleRespository = moduleRespository;
+    }
 
     /**
      * to add and save a module in the table module
@@ -40,6 +43,10 @@ public class ModuleService {
         return module;
     }
 
+    /**
+     * to delete a module from the table module
+     * @param id: id of a module
+     */
     public void removeModule(Long id){
         if(id != null){
             Optional<Module> optionalModule = moduleRespository.findById(id);

@@ -18,15 +18,27 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * controller to manage the pages of the category module
+ */
 @Controller
 @RequestMapping("/grademanager/module")
 public class ModuleController {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    @Autowired
-    private ModuleService moduleService;
+    private final ModuleService moduleService;
 
+    public ModuleController(StudentService studentService, ModuleService moduleService) {
+        this.studentService = studentService;
+        this.moduleService = moduleService;
+    }
+
+    /**
+     * shows module data for logged in student
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student
+     * @return html document module without deactivated modules
+     */
     @GetMapping
     public String showModule(Model model, HttpSession session) {
         Module module = new Module();
@@ -39,6 +51,12 @@ public class ModuleController {
         return "module";
     }
 
+    /**
+     * shows form to add new module
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student
+     * @return html document edit module with empty form
+     */
     @GetMapping("/add")
     public String showModuleN(Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -50,6 +68,13 @@ public class ModuleController {
         return "editModule";
     }
 
+    /**
+     * shows form to edit module and fills in current data
+     * @param id: to get module in students module list
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student
+     * @return html document edit module with filled in data
+     */
     @GetMapping("/edit")
     public String showModuleE(@Valid Long id, Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -61,12 +86,19 @@ public class ModuleController {
         return "editModule";
     }
 
+    /**
+     * saves module in table module and shows edited data
+     * @param module: module to save
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student
+     * @return html document module check for edited or created module
+     */
     @PostMapping("/check")
     public String checkModuleE(@Valid @ModelAttribute Module module, Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
         int index = 0;
         for (Module m : student.getModules()) {
-            if (m.getId() == module.getId()) {
+            if (m.getId().equals(module.getId())) {
                 break;
             }
             index++;
@@ -83,6 +115,13 @@ public class ModuleController {
         return "checkModule";
     }
 
+    /**
+     * deactivates module and modules other data
+     * @param id: to get module in students module list
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student and remove module session
+     * @return html document module without deactivated modules
+     */
     @GetMapping("/del")
     public String showModuleD(@Valid Long id, Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -99,7 +138,12 @@ public class ModuleController {
         return "module";
     }
 
-    public static void moduleInfo(Model model, Student student) {
+    /**
+     * adds lists to model
+     * @param model: model for thymeleaf
+     * @param student: current student to get modules
+     */
+    static void moduleInfo(Model model, Student student) {
         State[] state = State.values();
         model.addAttribute(state);
         Direction[] directions = Direction.values();

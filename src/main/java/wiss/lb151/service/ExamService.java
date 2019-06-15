@@ -13,8 +13,11 @@ import java.util.Optional;
  */
 @Service
 public class ExamService {
-    @Autowired
-    private ExamRespository examRespository;
+    private final ExamRespository examRespository;
+
+    public ExamService(ExamRespository examRespository) {
+        this.examRespository = examRespository;
+    }
 
     /**
      * to add and save a exam in the table exam
@@ -40,6 +43,10 @@ public class ExamService {
         return exam;
     }
 
+    /**
+     * to delete a exam from the table exam
+     * @param id: id of a exam
+     */
     public void removeExam(Long id){
         if(id != null){
             Optional<Exam> optionalExam = examRespository.findById(id);

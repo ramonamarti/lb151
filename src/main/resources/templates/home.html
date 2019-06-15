@@ -3,16 +3,16 @@
 <!-- the first part will send you to the module page of the student or to a fail page -->
 <!-- the second part will send you to the page for rereading the save data -->
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:if="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
 <head>
     <title>Login</title>
-    <div th:replace="/fragments :: head"></div>
 </head>
 <body>
+<div th:replace="/fragments :: head"></div>
 <h1 class="title">Anmeldung</h1>
 
 <!--  help tools  -->
-<div>
+<div class="">
     <form method="get" th:action="@{/grademanager/admin}">
         <input type="submit" value="AdminData"/>
     </form>

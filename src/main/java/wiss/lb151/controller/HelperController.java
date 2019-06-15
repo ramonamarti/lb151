@@ -19,13 +19,24 @@ import java.util.List;
 import static wiss.lb151.controller.ModuleController.moduleInfo;
 import static wiss.lb151.controller.StudentController.studentInfo;
 
+/**
+ * controller to manage the pages of the category admin and all general pages like home, password check, login and out
+ */
 @Controller
 @RequestMapping("/grademanager")
 public class HelperController {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    // load admin Test Data
+    public HelperController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    /**
+     * creates test data to insert into database
+     * @param model: model for thymeleaf
+     * @return html document home
+     */
+    // load admin test data (hidden)
     @GetMapping("/admin")
     public String admin(Model model) {
         Student student = new Student("Test", "Admin", "admin");
@@ -107,6 +118,13 @@ public class HelperController {
         return "home";
     }
 
+    /**
+     * to login with admin data
+     * @param model: model for thymeleaf
+     * @param session: to save the login name
+     * @return html document module with admin user
+     */
+    // login with admin data (hidden)
     @PostMapping("/admin/module")
     public String adminModule(Model model, HttpSession session) {
         Module module = new Module();
@@ -117,6 +135,11 @@ public class HelperController {
         return "module";
     }
 
+    /**
+     * shows login and registration page
+     * @param model: model for thymeleaf
+     * @return html document home
+     */
     @GetMapping
     public String showLogin(Model model) {
         Student student = new Student();
@@ -132,6 +155,14 @@ public class HelperController {
         return "home";
     }
 
+    /**
+     * shows module page for user with login name
+     * @param login: receives login name for form input
+     * @param password: receives password for form input
+     * @param model: model for thymeleaf
+     * @param session: to save the login name
+     * @return html document home
+     */
     @PostMapping("/login/module")
     public String loginModule(@Valid String login, @Valid String password, Model model, HttpSession session) {
         if (studentService.getStudent(login).getDeactivated().equals(Bool.Nein)) {
@@ -150,6 +181,12 @@ public class HelperController {
         }
     }
 
+    /**
+     * to logout to the home page and remove session
+     * @param model: model for thymeleaf
+     * @param session: to remove the login name
+     * @return html document home
+     */
     @GetMapping("/logout")
     public String logout(Model model, HttpSession session) {
         session.removeAttribute("user");
@@ -159,8 +196,15 @@ public class HelperController {
         return "home";
     }
 
+    /**
+     * to show that the password is changed
+     * @param id: id of the student to change password
+     * @param password: new password to change
+     * @param model: model for thymeleaf
+     * @return html document check password
+     */
     @PostMapping("/password/check")
-    public String checkE(@Valid Long id, @Valid String password, Model model, HttpSession session) {
+    public String checkE(@Valid Long id, @Valid String password, Model model) {
         Student student = studentService.getStudent(id);
         student.setPassword(password);
         model.addAttribute("student", student);
@@ -169,6 +213,12 @@ public class HelperController {
         return "checkPassword";
     }
 
+    /**
+     * sets the color of a grade with its value
+     * @param grade: grade value to define color
+     * @param index: index of the exam of the grade to set color
+     * @param module: module of the exam of the grade to set color
+     */
     private void gradeColor(double grade, int index, Module module){
         if(grade>=5){
             module.getExams().get(index).getGrade().setColor(Color.Gruen);

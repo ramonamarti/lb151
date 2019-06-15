@@ -13,8 +13,11 @@ import java.util.Optional;
  */
 @Service
 public class CityService {
-    @Autowired
-    private CityRespository cityRespository;
+    private final CityRespository cityRespository;
+
+    public CityService(CityRespository cityRespository) {
+        this.cityRespository = cityRespository;
+    }
 
     /**
      * to add and save a city in the table city
@@ -27,7 +30,7 @@ public class CityService {
 
     /**
      * to get a city from the table city
-     * @param id:
+     * @param id: id of a city
      * @return city of the table city
      */
     public City getCity(Long id) {
@@ -42,7 +45,7 @@ public class CityService {
 
     /**
      * to get a city from the table city
-     * @param name: 
+     * @param name: name of a city
      * @return city of the table city
      */
     public City getCity(String name) {
@@ -55,6 +58,10 @@ public class CityService {
         return city;
     }
 
+    /**
+     * to delete a city from the table city
+     * @param id: id of a city
+     */
     public void removeCity(Long id){
         if(id != null){
             Optional<City> optionalCity = cityRespository.findById(id);

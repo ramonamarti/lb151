@@ -14,8 +14,11 @@ import java.util.Optional;
  */
 @Service
 public class StudentService {
-    @Autowired
-    private StudentRespository studentRespository;
+    private final StudentRespository studentRespository;
+
+    public StudentService(StudentRespository studentRespository) {
+        this.studentRespository = studentRespository;
+    }
 
     /**
      * to add and save a student in the table student
@@ -56,6 +59,10 @@ public class StudentService {
         return student;
     }
 
+    /**
+     * to delete a student from the table student
+     * @param id: id of a student
+     */
     public void removeStudent(Long id){
         if(id != null){
             Optional<Student> optionalStudent = studentRespository.findById(id);
@@ -65,9 +72,12 @@ public class StudentService {
         }
     }
 
+    /**
+     * to get a list of all students from the table student
+     * @return list of all students of the table student
+     */
     // not used jet
     public List<Student> findStudent(){
-        List<Student> optionalStudent = studentRespository.findAll();
-        return optionalStudent;
+        return studentRespository.findAll();
     }
 }

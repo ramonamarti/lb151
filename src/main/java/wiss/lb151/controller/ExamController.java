@@ -20,24 +20,37 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * controller to manage the pages of the category exam
+ */
 @Controller
 @RequestMapping("/grademanager/exam")
 public class ExamController {
-    @Autowired
-    private StudentService studentService;
+    private final StudentService studentService;
 
-    @Autowired
-    private ModuleService moduleService;
+    private final ModuleService moduleService;
 
-    @Autowired
-    private ExamService examService;
+    private final ExamService examService;
 
+    public ExamController(StudentService studentService, ModuleService moduleService, ExamService examService) {
+        this.studentService = studentService;
+        this.moduleService = moduleService;
+        this.examService = examService;
+    }
+
+    /**
+     * shows exam data for current module
+     * @param id: to get module in students module list
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student
+     * @return html document exam without deactivated exams of current module
+     */
     @GetMapping
     public String showExam(@Valid Long id, Model model, HttpSession session) {
         session.setAttribute("module", id);
         Student student = studentService.getStudent((String) session.getAttribute("user"));
         for (Module m : student.getModules()) {
-            if (m.getId() == id) {
+            if (m.getId().equals(id)) {
                 model.addAttribute(m);
                 model.addAttribute("number", m.getNumber());
                 examInfo(model, m);
@@ -46,6 +59,12 @@ public class ExamController {
         return "exam";
     }
 
+    /**
+     * shows exam data for every module
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student
+     * @return html document exam without deactivated exams of all modules
+     */
     @GetMapping("/all")
     public String showExamA(Model model, HttpSession session) {
         session.removeAttribute("module");
@@ -55,6 +74,12 @@ public class ExamController {
         return "examAll";
     }
 
+    /**
+     * shows form to add new module
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student and current module
+     * @return html document edit exam with empty form
+     */
     @GetMapping("/add")
     public String showExamN(Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -67,6 +92,13 @@ public class ExamController {
         return "editExam";
     }
 
+    /**
+     * shows form to edit exam and fills in current data
+     * @param id: to get exam in modules exam list
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student and current module
+     * @return html document edit exam with filled in data
+     */
     @GetMapping("/edit")
     public String showExamE(@Valid Long id, Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -83,6 +115,13 @@ public class ExamController {
         return "editExam";
     }
 
+    /**
+     * saves exam in table exam and shows edited data
+     * @param exam: exam to save
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student and current module
+     * @return html document check exam for edited or created exams
+     */
     @PostMapping("/check")
     public String checkExamE(@Valid @ModelAttribute Exam exam, Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
@@ -96,7 +135,7 @@ public class ExamController {
         }
         int index = 0;
         for (Exam e : module.getExams()) {
-            if (e.getId() == exam.getId()) {
+            if (e.getId().equals(exam.getId())) {
                 break;
             }
             index++;
@@ -127,13 +166,20 @@ public class ExamController {
         return "checkExam";
     }
 
+    /**
+     * deactivates exam and exams other data
+     * @param id: to get exam in modules exam list
+     * @param model: model for thymeleaf
+     * @param session: to get logged in student and current module
+     * @return html document exam with current module without deactivated exams
+     */
     @GetMapping("/del")
     public String showExamD(@Valid Long id, Model model, HttpSession session) {
         Student student = studentService.getStudent((String) session.getAttribute("user"));
         for (Module m : student.getModules()) {
             if (m.getId() == session.getAttribute("module")) {
                 for (Exam e : m.getExams()) {
-                    if (e.getId() == id) {
+                    if (e.getId().equals(id)) {
                         e.setDeactivated(Bool.Ja);
                         e.getGrade().setDeactivated(Bool.Ja);
                     }
@@ -146,7 +192,12 @@ public class ExamController {
         return "exam";
     }
 
-    public static void examInfo(Model model, Module module) {
+    /**
+     * adds lists to model
+     * @param model: model for thymeleaf
+     * @param module: module to get exams
+     */
+    private static void examInfo(Model model, Module module) {
         State[] states = State.values();
         model.addAttribute(states);
         Type[] examTypes = Type.values();
@@ -159,6 +210,12 @@ public class ExamController {
         model.addAttribute(bools);
     }
 
+    /**
+     * sets the color of a grade
+     * @param module: module of the grade
+     * @param index: index of the exam in the module list
+     * @param color: color to define the grade on
+     */
     private void setGradeColor(Module module, int index, Color color){
         module.getExams().get(index).getGrade().setColor(color);
     }
