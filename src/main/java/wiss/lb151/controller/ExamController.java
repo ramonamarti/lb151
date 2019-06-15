@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
-/**
+/***
  * controller to manage the pages of the category exam
  */
 @Controller

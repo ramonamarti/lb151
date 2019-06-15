@@ -138,7 +138,7 @@ public class ModuleController {
         return "module";
     }
 
-    /**
+    /***
      * adds lists to model
      * @param model: model for thymeleaf
      * @param student: current student to get modules

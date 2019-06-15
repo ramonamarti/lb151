@@ -8,7 +8,7 @@ import wiss.lb151.repository.ModuleRespository;
 import javax.validation.Valid;
 import java.util.Optional;
 
-/**
+/***
  * service to add a module, get a module with its id or remove a module
  */
 @Service

@@ -100,7 +100,7 @@ public class StudentController {
         return "checkStudent";
     }
 
-    /**
+    /***
      * shows home after student and students other data is deactivated
      * @param model: model for thymeleaf
      * @param session: to get student with login name
