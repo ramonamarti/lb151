@@ -1,0 +1,320 @@
+-- MySQL dump 10.13  Distrib 5.7.26, for Linux (x86_64)
+--
+-- Host: localhost    Database: mydatabase
+-- ------------------------------------------------------
+-- Server version	5.7.26-0ubuntu0.18.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `city`
+--
+
+DROP TABLE IF EXISTS `city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `city` (
+  `id` bigint(20) NOT NULL,
+  `deactivated` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `zip` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_qsstlki7ni5ovaariyy9u8y79` (`name`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `city`
+--
+
+LOCK TABLES `city` WRITE;
+/*!40000 ALTER TABLE `city` DISABLE KEYS */;
+INSERT INTO `city` VALUES (1,'Nein','Däniken','4658'),(2,NULL,'Test','1111');
+/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `exam`
+--
+
+DROP TABLE IF EXISTS `exam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `exam` (
+  `id` bigint(20) NOT NULL,
+  `deactivated` varchar(255) DEFAULT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
+  `exam_grade_fk` bigint(20) DEFAULT NULL,
+  `module_exam_fk` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKe0fxgvfq4i93n8i6p83f87xv1` (`exam_grade_fk`),
+  KEY `FKfq8mrb05wdp0b8b58kyb8wosc` (`module_exam_fk`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `exam`
+--
+
+LOCK TABLES `exam` WRITE;
+/*!40000 ALTER TABLE `exam` DISABLE KEYS */;
+INSERT INTO `exam` VALUES (1,'Nein','Offen','Zwischenprüfung',1,1),(2,'Nein','Abgeschlossen','Endprüfung',2,1),(3,'Nein','In_Arbeit','Projekt',3,2),(4,'Nein','Offen','Zwischenprüfung',4,2);
+/*!40000 ALTER TABLE `exam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `flyway_schema_history`
+--
+
+DROP TABLE IF EXISTS `flyway_schema_history`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `flyway_schema_history` (
+  `installed_rank` int(11) NOT NULL,
+  `version` varchar(50) DEFAULT NULL,
+  `description` varchar(200) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `script` varchar(1000) NOT NULL,
+  `checksum` int(11) DEFAULT NULL,
+  `installed_by` varchar(100) NOT NULL,
+  `installed_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `execution_time` int(11) NOT NULL,
+  `success` tinyint(1) NOT NULL,
+  PRIMARY KEY (`installed_rank`),
+  KEY `flyway_schema_history_s_idx` (`success`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `flyway_schema_history`
+--
+
+LOCK TABLES `flyway_schema_history` WRITE;
+/*!40000 ALTER TABLE `flyway_schema_history` DISABLE KEYS */;
+/*!40000 ALTER TABLE `flyway_schema_history` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `grade`
+--
+
+DROP TABLE IF EXISTS `grade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grade` (
+  `id` bigint(20) NOT NULL,
+  `color` varchar(255) DEFAULT NULL,
+  `deactivated` varchar(255) DEFAULT NULL,
+  `value` double NOT NULL,
+  `weight` double NOT NULL,
+  `student_grade_fk` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKjuub1ib2rck9e087wukse3c3b` (`student_grade_fk`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grade`
+--
+
+LOCK TABLES `grade` WRITE;
+/*!40000 ALTER TABLE `grade` DISABLE KEYS */;
+INSERT INTO `grade` VALUES (1,'Gruen','Nein',5,0.4,1),(2,'Rot','Nein',3,0.3,1),(3,'Schwarz','Nein',4.3,0.6,1),(4,'Gruen','Nein',5.9,0.4,1);
+/*!40000 ALTER TABLE `grade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `module`
+--
+
+DROP TABLE IF EXISTS `module`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `module` (
+  `id` bigint(20) NOT NULL,
+  `deactivated` varchar(255) DEFAULT NULL,
+  `direction` varchar(255) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `number` int(11) NOT NULL,
+  `state` varchar(255) DEFAULT NULL,
+  `teacher` varchar(255) DEFAULT NULL,
+  `student_module_fk` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_df4hvfahnbkrkce4coyghk3l8` (`number`),
+  KEY `FKpvy9ytp5p31rq16xwnrhhum6p` (`student_module_fk`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `module`
+--
+
+LOCK TABLES `module` WRITE;
+/*!40000 ALTER TABLE `module` DISABLE KEYS */;
+INSERT INTO `module` VALUES (1,'Nein','ICT','Mod1',104,'Abgeschlossen','Herr XY',1),(2,'Nein','Systemsechtnik','Mod2',304,'Offen','Frau XX',1);
+/*!40000 ALTER TABLE `module` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seq_city`
+--
+
+DROP TABLE IF EXISTS `seq_city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seq_city` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seq_city`
+--
+
+LOCK TABLES `seq_city` WRITE;
+/*!40000 ALTER TABLE `seq_city` DISABLE KEYS */;
+INSERT INTO `seq_city` VALUES (3);
+/*!40000 ALTER TABLE `seq_city` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seq_exam`
+--
+
+DROP TABLE IF EXISTS `seq_exam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seq_exam` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seq_exam`
+--
+
+LOCK TABLES `seq_exam` WRITE;
+/*!40000 ALTER TABLE `seq_exam` DISABLE KEYS */;
+INSERT INTO `seq_exam` VALUES (5);
+/*!40000 ALTER TABLE `seq_exam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seq_grade`
+--
+
+DROP TABLE IF EXISTS `seq_grade`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seq_grade` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seq_grade`
+--
+
+LOCK TABLES `seq_grade` WRITE;
+/*!40000 ALTER TABLE `seq_grade` DISABLE KEYS */;
+INSERT INTO `seq_grade` VALUES (5);
+/*!40000 ALTER TABLE `seq_grade` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seq_module`
+--
+
+DROP TABLE IF EXISTS `seq_module`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seq_module` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seq_module`
+--
+
+LOCK TABLES `seq_module` WRITE;
+/*!40000 ALTER TABLE `seq_module` DISABLE KEYS */;
+INSERT INTO `seq_module` VALUES (3);
+/*!40000 ALTER TABLE `seq_module` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `seq_student`
+--
+
+DROP TABLE IF EXISTS `seq_student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `seq_student` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `seq_student`
+--
+
+LOCK TABLES `seq_student` WRITE;
+/*!40000 ALTER TABLE `seq_student` DISABLE KEYS */;
+INSERT INTO `seq_student` VALUES (3);
+/*!40000 ALTER TABLE `seq_student` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `student`
+--
+
+DROP TABLE IF EXISTS `student`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `student` (
+  `id` bigint(20) NOT NULL,
+  `deactivated` varchar(255) DEFAULT NULL,
+  `direction` varchar(255) DEFAULT NULL,
+  `familyname` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `login` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `street` varchar(255) NOT NULL,
+  `student_city_fk` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_t5vpeh9gchmd6j66jiyr07trn` (`login`),
+  KEY `FK2j25scuyo49v0nctub2q5v82p` (`student_city_fk`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `student`
+--
+
+LOCK TABLES `student` WRITE;
+/*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES (1,'Nein','Applikation','Test','Admin','admin','admin','Alte Landstrasse 17',1),(2,'Nein','Systemsechtnik','Test','Test','Test','123123','Test',2);
+/*!40000 ALTER TABLE `student` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2019-06-15 20:57:23
